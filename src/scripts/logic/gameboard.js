@@ -1,3 +1,4 @@
+import { hitPlayerBoard } from "../layoutManager";
 import { GameTile } from "./gametile"
 import { Ship } from "./ship";
 
@@ -50,9 +51,19 @@ class GameBoard {
         return true;        
     }
 
-    canBeAttacked(x, y)
+    isValidCoord(x, y)
     {
         if(x > 9 || y > 9 || x < 0 || y < 0)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    canBeAttacked(x, y)
+    {
+        if(!this.isValidCoord(x, y))
         {
             return false;
         }
@@ -65,9 +76,84 @@ class GameBoard {
         return true;
     }
 
+    hasAdjacentShip(x, y)
+    {
+        if(this.isValidCoord(x, (y-1)))
+        {
+            if(this.isValidCoord((x-1), (y-1)))
+            {
+                if(this.currentBoard[(y-1)][(x-1)].ship !== null)
+                {
+                    return true;
+                }
+            }
+
+            if(this.isValidCoord((x), (y-1)))
+            {
+                if(this.currentBoard[(y-1)][(x)].ship !== null)
+                {
+                    return true;
+                }
+            }
+
+            if(this.isValidCoord((x+1), (y-1)))
+            {
+                if(this.currentBoard[(y-1)][(x+1)].ship !== null)
+                {
+                    return true;
+                }
+            }
+        }
+
+        if(this.isValidCoord((x-1), (y)))
+        {
+            if(this.currentBoard[(y)][(x-1)].ship !== null)
+            {
+                return true;
+            }
+        }
+
+        if(this.isValidCoord((x+1), (y)))
+        {
+            if(this.currentBoard[(y)][(x+1)].ship !== null)
+            {
+                return true;
+            }
+        }
+
+        if(this.isValidCoord(x, (y+1)))
+        {
+            if(this.isValidCoord((x-1), (y+1)))
+            {
+                if(this.currentBoard[(y+1)][(x-1)].ship !== null)
+                {
+                    return true;
+                }
+            }
+
+            if(this.isValidCoord((x), (y+1)))
+            {
+                if(this.currentBoard[(y+1)][(x)].ship !== null)
+                {
+                    return true;
+                }
+            }
+
+            if(this.isValidCoord((x+1), (y+1)))
+            {
+                if(this.currentBoard[(y+1)][(x+1)].ship !== null)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     isValidPosition(x, y)
     {
-        if(x > 9 || y > 9 || x < 0 || y < 0)
+        if(!this.isValidCoord(x, y))
         {
             return false;
         }
@@ -78,6 +164,11 @@ class GameBoard {
         }
 
         if(this.currentBoard[y][x].ship !== null)
+        {
+            return false;
+        }
+
+        if(this.hasAdjacentShip(x, y))
         {
             return false;
         }
@@ -116,8 +207,10 @@ class GameBoard {
                 if(rotation === 0)
                 {
                     this.currentBoard[baseY][(baseX+i)].ship = newShip;
+                    newShip.gameTiles.push(this.currentBoard[baseY][(baseX+i)]);
                 } else {
                     this.currentBoard[(baseY+i)][baseX].ship = newShip;
+                    newShip.gameTiles.push(this.currentBoard[(baseY+i)][baseX]);
                 }
             }
 
@@ -129,7 +222,7 @@ class GameBoard {
         }
     }
 
-    receiveAttack (x, y)
+    receiveAttack (x, y, isComputer = false)
     {
         if(!this.canBeAttacked(x, y))
         {
@@ -139,9 +232,17 @@ class GameBoard {
             {
                 this.currentBoard[y][x].hit = true;
 
+                let isShip = false;
+
                 if(this.currentBoard[y][x].ship !== null)
                 {
                     this.currentBoard[y][x].ship.hit();
+                    isShip = true;
+                }
+
+                if(!isComputer)
+                {
+                    hitPlayerBoard(x, y, isShip);
                 }
 
                 return true;

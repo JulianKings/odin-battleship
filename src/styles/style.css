@@ -9,3 +9,103 @@ body {
     font-family: 'Calibri', 'Roboto', sans-serif;
     font-size: 1.1rem;
 }
+
+.content {
+    background-color: rgb(230, 233, 234, 0.4);
+    width: 100%;
+    min-height: 100%;
+    height: auto;
+    display: flex;
+}
+
+.game-holder {
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    padding: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    margin: 5rem 3rem;
+    border-radius: 0.4rem;
+    width: 100%;
+    box-shadow: 0.1rem 0.1em 0.3rem rgb(0, 0, 0, 0.1);
+}
+
+.player-box {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.player-box-grid
+{
+    display: grid;
+    grid-template-columns: repeat(10, 2.4rem);
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+}
+
+.player-box-grid-item {
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    height: 2.4rem;
+    width: 2.4rem;
+}
+
+.ship {
+    background-color: rgba(76, 116, 175, 0.781);
+}
+
+.computer-box {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.computer-box-grid
+{
+    display: grid;
+    grid-template-columns: repeat(10, 2.4rem);
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+}
+
+.computer-box-grid-item {
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    height: 2.4rem;
+    width: 2.4rem;
+}
+
+
+.computer-box-grid-item:hover {
+    background-color: rgba(228, 228, 228, 0.527);
+}
+
+.hit {
+    background-color: rgba(175, 76, 76, 0.781);
+}
+
+.hit:hover {
+    background-color: rgba(175, 76, 76, 0.781);
+}
+
+.hit_ship {
+    background-color: rgba(23, 45, 77, 0.781);
+}
+
+.hit_enemy_ship {
+    background-color: rgba(75, 41, 41, 0.781);
+}
+
+.hit_enemy_ship:hover {
+    background-color: rgba(75, 41, 41, 0.781);
+}
+
+.computer-box {
+    display:flex;
+    flex-direction: column;
+}
