@@ -3,23 +3,25 @@ import { GameManager } from "./gameManager";
 let gameManager;
 
 const _clickHandler = (event) => {
-    if(event.target.classList.contains('computer-box-grid-item'))
+    if(gameManager.status === 'started')
     {
-        if(!event.target.classList.contains('hit') && !event.target.classList.contains("hit_enemy_ship"))
+        if(event.target.classList.contains('computer-box-grid-item'))
         {
-            const obj = event.target.getAttribute("data-pos").split(',');
-            const setX = obj[0], setY = obj[1];
-            gameManager.player.doPlayerAttack(setX, setY, gameManager);
-
-            if(gameManager.computer.gameBoard.currentBoard[setY][setX].ship !== null)
+            if(!event.target.classList.contains('hit') && !event.target.classList.contains("hit_enemy_ship"))
             {
-                event.target.classList.add("hit_enemy_ship");
-            } else {
-                event.target.classList.add('hit');
+                const obj = event.target.getAttribute("data-pos").split(',');
+                const setX = obj[0], setY = obj[1];
+                gameManager.player.doPlayerAttack(setX, setY, gameManager);
+
+                if(gameManager.computer.gameBoard.currentBoard[setY][setX].ship !== null)
+                {
+                    event.target.classList.add("hit_enemy_ship");
+                } else {
+                    event.target.classList.add('hit');
+                }
             }
         }
     }
-
 }
 
 const hitPlayerBoard = (x, y, isShip) => {
@@ -36,8 +38,8 @@ const hitPlayerBoard = (x, y, isShip) => {
 
 }
 
-const notifyVictory = (playerWon) => {
-    if(playerWon)
+const notifyVictory = (computerWon) => {
+    if(!computerWon)
     {
         const playerInput = document.querySelector('.player-box-title');
         playerInput.textContent = 'Player (WON!)';
@@ -93,4 +95,4 @@ const generateLayout = () => {
 }
 
 export default generateLayout;
-export { hitPlayerBoard }
+export { hitPlayerBoard, notifyVictory }

@@ -1,3 +1,4 @@
+import { notifyVictory } from "../layoutManager";
 import { ComputerAI } from "./computerAI";
 import { GameBoard } from "./gameboard"
 
@@ -18,12 +19,29 @@ class GamePlayer {
         {
             const nextMove = this.computerMove.validNextMove();
             game.player.gameBoard.receiveAttack(nextMove[0], nextMove[1]);
+
+            if(game.player.gameBoard.shipsSunk())
+            {
+                game.computer.doVictory(game);
+            }
         } else {
             game.computer.gameBoard.receiveAttack(x, y, true);
 
-            // computer fights back
-            game.computer.doPlayerAttack(x, y, game);
+            if(game.computer.gameBoard.shipsSunk())
+            {
+                game.player.doVictory(game);
+            } else {
+
+                // computer fights back
+                game.computer.doPlayerAttack(x, y, game);
+            }
         }
+    }
+
+    doVictory(game)
+    {
+        game.status = 'finished';
+        notifyVictory(this.isComputer);        
     }
 }
 
