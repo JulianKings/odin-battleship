@@ -18,11 +18,10 @@ body {
     display: flex;
 }
 
-.game-holder {
+.game-box {
     background-color: white;
     display: flex;
-    flex-direction: row;
-    gap: 2rem;
+    flex-direction: column;
     padding: 1.5rem;
     align-items: center;
     justify-content: center;
@@ -30,6 +29,13 @@ body {
     border-radius: 0.4rem;
     width: 100%;
     box-shadow: 0.1rem 0.1em 0.3rem rgb(0, 0, 0, 0.1);
+
+}
+
+.game-holder {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
 }
 
 .player-box {
@@ -108,4 +114,47 @@ body {
 .computer-box {
     display:flex;
     flex-direction: column;
+}
+
+.options-holder {
+    margin: 1.5rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.options_button {
+    padding: 0.5rem 1.3rem;
+    margin: 0.2rem 0.4rem;
+    border: 0px;
+    background-color: rgb(235, 235, 235);
+    border-radius: 0.4rem;
+    box-shadow: 0.1rem 0.1em 0.25rem rgb(0, 0, 0, 0.2);
+    transition: all 0.15s ease-in;
+    backface-visibility: hidden;
+}
+
+.options_button:hover {
+    background-color: rgb(216, 216, 216);
+    transform: translateZ(0);
+    transform: scale(1.04);
+}
+
+.options_button:active {
+    background-color: rgb(163, 163, 163);
+}
+
+.text-holder {
+    margin: 0.2rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+}
+
+.text-holder p {
+    margin: 0; padding: 0;
 }

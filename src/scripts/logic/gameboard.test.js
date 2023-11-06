@@ -7,7 +7,7 @@ it('Test generating random board', () => {
 });
 
 it('Test placing a ship', () => {
-    expect(mockBoard.placeNewShip(1)).toBe(true);
+    expect(mockBoard.placeNewShip(1)).toNotBe(false);
 });
 
 it('Test attacking a coordinate', () => {

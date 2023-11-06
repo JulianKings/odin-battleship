@@ -13,6 +13,7 @@ class ComputerAI {
             ['','','','','','','','','',''],
             ['','','','','','','','','','']
         ];
+        this.nextMovements = [];
     }
 
     getRandomInt(max) {
@@ -40,15 +41,20 @@ class ComputerAI {
     }
 
     validNextMove() {
-        const randX = this.getRandomInt(10);
-        const randY = this.getRandomInt(10);
-
-        if(this.isValidPosition(randX, randY))
+        if(this.nextMovements.length > 0)
         {
-            this.computerBoard[randY][randX] = 'X';
-            return [randX, randY];
+            return this.nextMovements.pop();
         } else {
-            return this.validNextMove();
+            const randX = this.getRandomInt(10);
+            const randY = this.getRandomInt(10);
+
+            if(this.isValidPosition(randX, randY))
+            {
+                this.computerBoard[randY][randX] = 'X';
+                return [randX, randY];
+            } else {
+                return this.validNextMove();
+            }
         }
     }
 }

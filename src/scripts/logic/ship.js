@@ -5,6 +5,7 @@ class Ship {
         this.rotation = rotation;
         this.hits = 0;        
         this.gameTiles = [];
+        this.index = 0;
     }
 
     hit () {

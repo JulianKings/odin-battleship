@@ -4,10 +4,14 @@ class GameManager {
     constructor () {
         this.player = new GamePlayer(false);
         this.computer = new GamePlayer(true);
-        this.status = 'started';
+        this.status = 'starting';
 
         this.player.gameBoard.generateBoard();
         this.computer.gameBoard.generateBoard();
+    }
+
+    startGame() {
+        this.status = 'started';
     }
 
     playerClicks(x, y)

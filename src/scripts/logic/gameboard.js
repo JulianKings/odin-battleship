@@ -151,6 +151,44 @@ class GameBoard {
         return false;
     }
 
+    hasSpaceForShip(x, y, size, rotation)
+    {
+        let validPosition = true;
+        for(let i = 0; i < size; i++)
+        {
+            if(rotation === 0)
+            {
+                if(!this.isValidPosition((x+i), y))
+                {
+                    validPosition = false;
+                }
+            } else {
+                if(!this.isValidPosition(x, (y+i)))
+                {
+                    validPosition = false;
+                }
+            }
+        }
+        return validPosition;
+    }
+
+    specialHasSpaceForShip(x, y, size, rotation, ship)
+    {
+        // remove ship
+        ship.gameTiles.forEach(tile => {
+            this.currentBoard[tile.y][tile.x].ship = null;
+        })
+
+        const validPosition = this.hasSpaceForShip(x, y, size, rotation);
+
+        // add the ship back
+        ship.gameTiles.forEach(tile => {
+            this.currentBoard[tile.y][tile.x].ship = ship;
+        })
+
+        return validPosition;
+    }
+
     isValidPosition(x, y)
     {
         if(!this.isValidCoord(x, y))
@@ -182,26 +220,32 @@ class GameBoard {
         const baseX = this.getRandomInt(10);
         const baseY = this.getRandomInt(10);
 
-        let validPosition = true;
-        for(let i = 0; i < size; i++)
+        return this.placeNewShipAt(baseX, baseY, size, rotation, this.shipList.length);
+    }
+
+    removeShipAt(x, y)
+    {
+        if(this.currentBoard[y][x].ship !== null)
         {
-            if(rotation === 0)
-            {
-                if(!this.isValidPosition((baseX+i), baseY))
-                {
-                    validPosition = false;
-                }
-            } else {
-                if(!this.isValidPosition(baseX, (baseY+i)))
-                {
-                    validPosition = false;
-                }
-            }
+            let ship = this.currentBoard[y][x].ship;
+            this.currentBoard[y][x].ship.gameTiles.forEach(tile => {
+                this.currentBoard[tile.y][tile.x].ship = null;
+            });
+
+            this.shipList.splice(ship.index, 1);
+
+            return ship.index;
         }
+    }
+
+    placeNewShipAt(baseX, baseY, size, rotation, index)
+    {
+        let validPosition = this.hasSpaceForShip(baseX, baseY, size, rotation);
 
         if(validPosition)
         {
             const newShip = new Ship(size, rotation);
+            newShip.index = index;
             for(let i = 0; i < size; i++)
             {
                 if(rotation === 0)
@@ -214,9 +258,9 @@ class GameBoard {
                 }
             }
 
-            this.shipList.push(newShip);
+            this.shipList.splice(index, 0, newShip);
 
-            return true;
+            return newShip;
         } else {
             return this.placeNewShip(size);
         }
