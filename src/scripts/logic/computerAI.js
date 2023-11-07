@@ -43,7 +43,9 @@ class ComputerAI {
     validNextMove() {
         if(this.nextMovements.length > 0)
         {
-            return this.nextMovements.pop();
+            const nextMovement = this.nextMovements.pop();
+            this.computerBoard[nextMovement.y][nextMovement.x] = 'X';
+            return [nextMovement.x, nextMovement.y];
         } else {
             const randX = this.getRandomInt(10);
             const randY = this.getRandomInt(10);

@@ -73,6 +73,11 @@ class GameBoard {
             return false;
         }
 
+        if(this.currentBoard[y][x].hit)
+        {
+            return false;
+        }
+
         return true;
     }
 
@@ -289,7 +294,7 @@ class GameBoard {
                     hitPlayerBoard(x, y, isShip);
                 }
 
-                return true;
+                return isShip;
             } else {
                 return false;
             }
